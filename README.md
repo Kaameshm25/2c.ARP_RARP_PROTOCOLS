@@ -1,4 +1,6 @@
-# 2c.SIMULATING ARP /RARP PROTOCOLS
+# Ex No :2c SIMULATING ARP /RARP PROTOCOLS
+## NAME : KAAMESH M
+## REGISTER NUMBER : 212223040080
 ## AIM
 To write a python program for simulating ARP protocols using TCP.
 ## ALGORITHM:
@@ -15,11 +17,79 @@ To write a python program for simulating ARP protocols using TCP.
 stored.
 4. Read the IP address which is send by the client.
 5. Map the IP address with its MAC address and return the MAC address to client.
-P
 ## PROGRAM - ARP
+### CLIENT
+```py
+import socket
+s=socket.socket()
+s.bind(('localhost',8000))
+s.listen(5)
+c,addr=s.accept()
+address={"165.165.80.80":"6A:08:AA:C2","165.165.79.1":"SA:BC:E3:FA"};
+while True:
+    ip=c.recv(1024).decode()
+    try:
+        c.send(address[ip].encode()) 
+    except KeyError:
+        c.send("Not Found".encode())
+
+```
+### SERVER
+```py
+import socket
+s=socket.socket()
+s.connect(('localhost',8000))
+while True:
+ ip=input("Enter logical Address: ")
+ s.send(ip.encode())
+ print("MAC Address",s.recv(1024).decode())
+
+```
 ## OUPUT - ARP
+### CLIENT OUTPUT
+
+![CN 2c c](https://github.com/Kaameshm25/2c.ARP_RARP_PROTOCOLS/assets/144870650/850e65d8-be28-4004-882c-dae2e1254366)
+
+### SERVER OUTPUT
+
+![CN 2c S1](https://github.com/Kaameshm25/2c.ARP_RARP_PROTOCOLS/assets/144870650/61e0b1cb-a29c-4159-b703-c36b5a87c152)
+
 ## PROGRAM - RARP
+### CLIENT
+```py
+import socket
+s=socket.socket()
+s.bind(('localhost',9000))
+s.listen(5)
+c,addr=s.accept()
+address={"6A:08:AA:C2":"192.168.1.100","8A:BC:E3:FA":"192.168.1.99"};
+while True:
+ ip=c.recv(1024).decode()
+ try:
+     c.send(address[ip].encode())
+ except KeyError:
+     c.send("Not Found".encode())
+
+```
+### SERVER
+```py
+import socket
+s=socket.socket()
+s.connect(('localhost',9000))
+while True:
+ ip=input("Enter MAC Address : ")
+ s.send(ip.encode())
+ print("Logical Address",s.recv(1024).decode())
+```
 ## OUPUT -RARP
+### CLIENT OUTPUT
+
+![CN 2c c](https://github.com/Kaameshm25/2c.ARP_RARP_PROTOCOLS/assets/144870650/ea1cb2cb-eed5-4b77-b837-b29d56b1566e)
+
+### SERVER OUTPUT
+
+![CN 2c S2](https://github.com/Kaameshm25/2c.ARP_RARP_PROTOCOLS/assets/144870650/57f7db25-8fcc-466d-aa7e-5408c2ac216c)
+
 ## RESULT
 Thus, the python program for simulating ARP protocols using TCP was successfully 
 executed.
